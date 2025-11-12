@@ -4,20 +4,20 @@
 
 # Ansible Role - Provision Odoo Community
 
-Role to deploy [Odoo Community-Edition](https://www.odoo.com/documentation/17.0/administration/on_premise.html)
+Role to deploy [Odoo Community-Edition](https://www.odoo.com/documentation/18.0/administration/on_premise.html)
 
 This role will work to install a self-hosted enterprise-edition installation - but will not completely automate it, as you need a custom setup-binary for it.
 
-[![Lint](https://github.com/ansibleguy/sw_odoo_community/actions/workflows/lint.yml/badge.svg)](https://github.com/ansibleguy/sw_odoo_community/actions/workflows/lint.yml)
-![Ansible Galaxy](https://badges.ansibleguy.net/galaxy.badge.svg)
+[![Lint](https://github.com/chadek/sw_odoo_community/actions/workflows/lint.yml/badge.svg)](https://github.com/chadek/sw_odoo_community/actions/workflows/lint.yml)
+![Ansible Galaxy](https://badges.chadek.net/galaxy.badge.svg)
 
 **Molecule Integration-Tests**:
 
-* Status: [![Molecule Test Status](https://badges.ansibleguy.net/sw_odoo_community.molecule.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2) |
-[![Functional-Tests](https://github.com/ansibleguy/sw_odoo_community/actions/workflows/integration_test_result.yml/badge.svg)](https://github.com/ansibleguy/sw_odoo_community/actions/workflows/integration_test_result.yml)
-* Logs: [API](https://ci.ansibleguy.net/api/job/ansible-test-molecule-sw_odoo_community/logs?token=2b7bba30-9a37-4b57-be8a-99e23016ce70&lines=1000) | [Short](https://badges.ansibleguy.net/log/molecule_sw_odoo_community_test_short.log) | [Full](https://badges.ansibleguy.net/log/molecule_sw_odoo_community_test.log)
+* Status: [![Molecule Test Status](https://badges.chadek.net/sw_odoo_community.molecule.svg)](https://github.com/chadek/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2) |
+[![Functional-Tests](https://github.com/chadek/sw_odoo_community/actions/workflows/integration_test_result.yml/badge.svg)](https://github.com/chadek/sw_odoo_community/actions/workflows/integration_test_result.yml)
+* Logs: [API](https://ci.chadek.net/api/job/ansible-test-molecule-sw_odoo_community/logs?token=2b7bba30-9a37-4b57-be8a-99e23016ce70&lines=1000) | [Short](https://badges.chadek.net/log/molecule_sw_odoo_community_test_short.log) | [Full](https://badges.chadek.net/log/molecule_sw_odoo_community_test.log)
 
-Internal CI: [Tester Role](https://github.com/ansibleguy/_meta_cicd) | [Jobs API](https://github.com/O-X-L/github-self-hosted-jobs-systemd)
+Internal CI: [Tester Role](https://github.com/chadek/_meta_cicd) | [Jobs API](https://github.com/O-X-L/github-self-hosted-jobs-systemd)
 
 **Tested:**
 * Debian 12
@@ -28,13 +28,13 @@ Internal CI: [Tester Role](https://github.com/ansibleguy/_meta_cicd) | [Jobs API
 
 ```bash
 # latest
-ansible-galaxy role install git+https://github.com/ansibleguy/sw_odoo_community
+ansible-galaxy role install git+https://github.com/chadek/sw_odoo_community
 
 # from galaxy
-ansible-galaxy install ansibleguy.sw_odoo_community
+ansible-galaxy install chadek.sw_odoo_community
 
 # or to custom role-path
-ansible-galaxy install ansibleguy.sw_odoo_community --roles-path ./roles
+ansible-galaxy install chadek.sw_odoo_community --roles-path ./roles
 
 # install dependencies
 ansible-galaxy install -r requirements.yml
@@ -48,7 +48,7 @@ ansible-galaxy install -r requirements.yml
 
 ```yaml
 odoo:
-  hostnames: 'erp.template.ansibleguy.net'
+  hostnames: 'erp.template.chadek.net'
   admin_passwd: !vault |
     ...
 
@@ -108,7 +108,7 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 
 * **Note:** Most of the role's functionality can be opted in or out.
 
-  For all available options - see the default-config located in [the main defaults-file](https://github.com/ansibleguy/sw_odoo_community/blob/latest/defaults/main/1_main.yml)!
+  For all available options - see the default-config located in [the main defaults-file](https://github.com/chadek/sw_odoo_community/blob/latest/defaults/main/1_main.yml)!
 
 
 * **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!
@@ -117,7 +117,7 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 * **Warning:** Make sure to only allow Port 80/443 to the server as odoo will listen on 8069 and optionally 8072!
 
 
-* **Note:** You might want to [block login-failure using Fail2Ban](https://www.odoo.com/documentation/17.0/administration/on_premise/deploy.html#blocking-brute-force-attacks)
+* **Note:** You might want to [block login-failure using Fail2Ban](https://www.odoo.com/documentation/18.0/administration/on_premise/deploy.html#blocking-brute-force-attacks)
 
 
 * **Note:** The `Master password` on the setup-screen is the `admin_passwd` set by this role. It is saved in the `/etc/odoo/odoo.conf` file.
@@ -129,28 +129,28 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 
     * Select your Odoo-Version and Download its ZIP
 
-      <img src="https://raw.githubusercontent.com/ansibleguy/sw_odoo_community/latest/docs/app_download.png" alt="Odoo app download" width="300"/>
+      <img src="https://raw.githubusercontent.com/chadek/sw_odoo_community/latest/docs/app_download.png" alt="Odoo app download" width="300"/>
   
     * Move the ZIP to your server and place it inside the addons-directory (`/var/lib/odoo/addons` by default in this setup) 
 
-    * Unzip it: `cd /var/lib/odoo/addons && unzip project-17.0.zip`
+    * Unzip it: `cd /var/lib/odoo/addons && unzip project-18.0.zip`
 
-    * Move the modules you want/need: `mv project-17.0/project_* /var/lib/odoo/addons/`
+    * Move the modules you want/need: `mv project-18.0/project_* /var/lib/odoo/addons/`
 
-    * Clean-up: `rm -r /var/lib/odoo/addons/project-17.0/`
+    * Clean-up: `rm -r /var/lib/odoo/addons/project-18.0/`
 
     * Restart odoo: `systemctl restart odoo.service`
 
 
 * **Note:** If you want to change to the **enterprise-edition** you will have to set `odoo.enterprise: true` so the community repository will get removed.
 
-    Docs: [odoo Docs](https://www.odoo.com/documentation/17.0/administration/on_premise/community_to_enterprise.html#on-linux-using-an-installer)
+    Docs: [odoo Docs](https://www.odoo.com/documentation/18.0/administration/on_premise/community_to_enterprise.html#on-linux-using-an-installer)
 
     You have to:
 
     * Install the community-edition first
     * Stop the service: `systemctl stop odoo.service`
-    * Download the enterprise binary `.deb` and install it as root: `dpkg -i odoo_17.0+e.latest_all.deb`
+    * Download the enterprise binary `.deb` and install it as root: `dpkg -i odoo_18.0+e.latest_all.deb`
 
     NOTE: Migrating from enterprise back to community edition is not easy!
 
