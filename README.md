@@ -4,6 +4,8 @@
 
 # Ansible Role - Provision Odoo Community
 
+This repository is a fork of [Ansible Guy's original repo](https://github.com/ansibleguy/sw_odoo_community) as it is now archived and not maintained anymore.
+
 Role to deploy [Odoo Community-Edition](https://www.odoo.com/documentation/18.0/administration/on_premise.html)
 
 This role will work to install a self-hosted enterprise-edition installation - but will not completely automate it, as you need a custom setup-binary for it.
